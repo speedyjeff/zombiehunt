@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="media\back.jpg" />
+    <None Remove="media\blank.png" />
+    <None Remove="media\corpse1.JPG" />
+    <None Remove="media\corpse2.JPG" />
+    <None Remove="media\exit.png" />
+    <None Remove="media\hero.JPG" />
+    <None Remove="media\nerd.JPG" />
+    <None Remove="media\rats.JPG" />
+    <None Remove="media\street.JPG" />
+    <None Remove="media\vigilantly.JPG" />
+    <None Remove="media\woman.JPG" />
+    <None Remove="media\zombie_bottom.jpg" />
+    <None Remove="media\zombie_left.jpg" />
+    <None Remove="media\zombie_right.jpg" />
+    <None Remove="media\zombie_top.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="media\back.jpg" />
+    <Resource Include="media\blank.png" />
+    <Resource Include="media\corpse1.JPG" />
+    <Resource Include="media\corpse2.JPG" />
+    <Resource Include="media\exit.png" />
+    <Resource Include="media\hero.JPG" />
+    <Resource Include="media\nerd.JPG" />
+    <Resource Include="media\rats.JPG" />
+    <Resource Include="media\street.JPG" />
+    <Resource Include="media\vigilantly.JPG" />
+    <Resource Include="media\woman.JPG" />
+    <Resource Include="media\zombie_bottom.jpg" />
+    <Resource Include="media\zombie_left.jpg" />
+    <Resource Include="media\zombie_right.jpg" />
+    <Resource Include="media\zombie_top.jpg" />
+  </ItemGroup>
+
+</Project>

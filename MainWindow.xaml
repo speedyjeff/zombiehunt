@@ -1,0 +1,413 @@
+﻿<Window x:Class="ZombieHunt.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZombieHunt"
+        mc:Ignorable="d"
+        Title="Zombie Hunt">
+    <Grid x:Name="LayoutRoot" Background="Black">
+        <!-- backgound -->
+        <Image Stretch="Fill" Source="/ZombieHunt;component/media/street.JPG" />
+
+        <!-- player 1 -->
+        <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Grid Name="Player1_Box" Background="CornflowerBlue">
+                <Rectangle Name="Player1_Background" Stroke="Yellow" StrokeThickness="2"/>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Player 1" Foreground="White" Padding="2" FontWeight="Bold"/>
+                        <Label Content="Current Score:" Foreground="white" Padding="2"/>
+                        <Label Content="Total Score:" Foreground="White" Padding="2" />
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <CheckBox Content="auto play" Name="Player1_Com" Foreground="White"  Padding="2" />
+                        <Label Foreground="Black" Name="Player1_Score" Padding="2" />
+                        <Label Foreground="Black" Name="Player1_Total" Padding="2" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <Label Name="TurnsRemaining" Foreground="White" FontSize="40"/>
+        </StackPanel>
+
+        <!-- player 2 -->
+        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button Content="Play Again" Name="PlayAgain" Click="PlayAgain_Click" Visibility="Collapsed" Background="White"/>
+            <Grid Name="Player2_Box" Background="SaddleBrown">
+                <Rectangle Name="Player2_Background" Stroke="Yellow" StrokeThickness="2"/>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Player 2" Foreground="White" Padding="2"  FontWeight="Bold"/>
+                        <Label Content="Current Score:" Foreground="White" Padding="2" />
+                        <Label Content="Total Score:" Foreground="White" Padding="2"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <CheckBox Content="auto play" Foreground="White" Name="Player2_Com" Padding="2" IsChecked="True"/>
+                        <Label Foreground="White" Name="Player2_Score" Padding="2" />
+                        <Label Foreground="White" Name="Player2_Total" Padding="2" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <!-- status -->
+        <Grid VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            <TextBlock Name="Status_Text" Text="TextBlock" Foreground="White" TextWrapping="Wrap" />
+        </Grid>
+
+        <!-- error -->
+        <Grid  VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <TextBlock Name="Error_Text" Text="TextBlock" Foreground="Red" TextWrapping="Wrap" FontWeight="Bold" FontStyle="Italic" />
+        </Grid>
+
+        <!-- legend -->
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <StackPanel.LayoutTransform>
+                <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+            </StackPanel.LayoutTransform>
+
+            <Label Content="Attack matrix" Foreground="White" FontWeight="Bold" FontSize="20"/>
+            
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/ZombieHunt;component/media/hero.JPG" Stretch="Fill"/>
+                <Label Content=" --> " Foreground="White" FontWeight="Bold" VerticalAlignment="Center"/>
+                <Image Source="/ZombieHunt;component/media/rats.JPG" Stretch="Fill"/>
+                <Image Source="/ZombieHunt;component/media/zombie_left.JPG" Stretch="Fill"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/ZombieHunt;component/media/vigilantly.JPG" Stretch="Fill"/>
+                <Label Content=" --> " Foreground="White" FontWeight="Bold" VerticalAlignment="Center"/>
+                <Image Source="/ZombieHunt;component/media/nerd.JPG" Stretch="Fill"/>
+                <Image Source="/ZombieHunt;component/media/woman.JPG" Stretch="Fill"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/ZombieHunt;component/media/rats.JPG" Stretch="Fill"/>
+                <Label Content=" --> " Foreground="White" FontWeight="Bold" VerticalAlignment="Center"/>
+                <Image Source="/ZombieHunt;component/media/corpse1.JPG" Stretch="Fill"/>
+                <Image Source="/ZombieHunt;component/media/corpse2.JPG" Stretch="Fill"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/ZombieHunt;component/media/zombie_left.JPG" Stretch="Fill"/>
+                <Label Content=" --> " Foreground="White" FontWeight="Bold" VerticalAlignment="Center"/>
+                <Image Source="/ZombieHunt;component/media/hero.JPG"  Stretch="Fill"/>
+                <Image Source="/ZombieHunt;component/media/vigilantly.JPG" Stretch="Fill"/>
+                <Image Source="/ZombieHunt;component/media/nerd.JPG" Stretch="Fill"/>
+                <Image Source="/ZombieHunt;component/media/woman.JPG" Stretch="Fill"/>
+            </StackPanel>
+        </StackPanel>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- row 0 -->
+            <Grid Grid.Row="0" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Grid>
+                        <!-- E0 -->
+                        <Rectangle Name="Box_E0" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_E0" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- row 1 -->
+            <Grid HorizontalAlignment="Center" Grid.Row="1">
+                <StackPanel Orientation="Horizontal">
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Grid>
+                        <Rectangle Name="Box_B1" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_B1" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_C1" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_C1" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_D1" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_D1" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_E1" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_E1" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_F1" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_F1" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_G1" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_G1" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_H1" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_H1" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- row 2 -->
+            <Grid HorizontalAlignment="Center" Grid.Row="2">
+                <StackPanel Orientation="Horizontal">
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Grid>
+                        <Rectangle Name="Box_B2" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_B2" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_C2" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_C2" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_D2" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_D2" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_E2" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_E2" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_F2" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_F2" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_G2" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_G2" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_H2" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_H2" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- row 3 -->
+            <Grid HorizontalAlignment="Center" Grid.Row="3">
+                <StackPanel Orientation="Horizontal">
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Grid>
+                        <Rectangle Name="Box_B3" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_B3" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_C3" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_C3" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_D3" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_D3" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_E3" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_E3" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_F3" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_F3" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_G3" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_G3" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_H3" Stroke="White" StrokeThickness="3" />
+                        <Image  Name="Card_H3" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- row 4 -->
+            <Grid HorizontalAlignment="Center" Grid.Row="4">
+                <StackPanel Orientation="Horizontal">
+                    <Grid>
+                        <Rectangle Name="Box_A4" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_A4" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_B4" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_B4" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_C4" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_C4" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_D4" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_D4" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_E4" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_E4" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_F4" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_F4" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_G4" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_G4" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_H4" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_H4" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_I4" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_I4" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                </StackPanel>
+            </Grid>
+
+            <!-- row 5 -->
+            <Grid HorizontalAlignment="Center" Grid.Row="5">
+                <StackPanel Orientation="Horizontal">
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Grid>
+                        <Rectangle Name="Box_B5" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_B5" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_C5" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_C5" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_D5" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_D5" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_E5" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_E5" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_F5" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_F5" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_G5" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_G5" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_H5" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_H5" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- row 6 -->
+            <Grid HorizontalAlignment="Center" Grid.Row="6">
+                <StackPanel Orientation="Horizontal">
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Grid>
+                        <Rectangle Name="Box_B6" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_B6" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_C6" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_C6" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_D6" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_D6" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_E6" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_E6" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_F6" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_F6" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_G6" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_G6" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_H6" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_H6" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- row 7 -->
+            <Grid HorizontalAlignment="Center" Grid.Row="7">
+                <StackPanel Orientation="Horizontal">
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Grid>
+                        <Rectangle Name="Box_B7" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_B7" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_C7" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_C7" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_D7" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_D7" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_E7" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_E7" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_F7" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_F7" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_G7" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_G7" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Grid>
+                        <Rectangle Name="Box_H7" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_H7" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- row 8 -->
+            <Grid Grid.Row="8" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Grid>
+                        <!-- E8 -->
+                        <Rectangle Name="Box_E8" Stroke="White" StrokeThickness="3" />
+                        <Image Name="Card_E8" Stretch="Fill" MouseLeftButtonUp="Card_MouseLeftButtonUp" />
+                    </Grid>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                    <Image Stretch="Fill" Source="/ZombieHunt;component/media/blank.png"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
